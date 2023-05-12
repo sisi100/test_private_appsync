@@ -21,9 +21,10 @@ vpc = aws_ec2.Vpc(
         ),
     ],
 )
-# appsync
 
-## データソース
+# ====> appsync
+
+# データソース
 function = aws_lambda.Function(
     stack,
     "Function",
@@ -33,7 +34,7 @@ function = aws_lambda.Function(
     handler="index.handler",
 )
 
-## API
+# API
 api = aws_appsync.GraphqlApi(
     stack,
     "Api",
@@ -48,7 +49,7 @@ lambda_data_source = aws_appsync.LambdaDataSource(
 )
 lambda_data_source.create_resolver("QueryGetUsers", type_name="Query", field_name="getUsers")
 
-## 無理やりprivateに設定する
+# 無理やりprivateに設定する
 cfn_api: aws_appsync.CfnGraphQLApi = api.node.default_child
 cfn_api.visibility = "PRIVATE"
 
